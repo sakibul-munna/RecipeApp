@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { Form, Button, Container, Card, Alert } from "react-bootstrap";
 import { useLogin } from "../hooks/useLogin";
+import { LinkContainer } from "react-router-bootstrap";
 
 const LoginScreen = ({ location }) => {
   const [email, setEmail] = useState("");
@@ -67,6 +68,12 @@ const LoginScreen = ({ location }) => {
                 Submit
               </Button>
             </Form>
+            <div className="w-100 text-center mt-3">
+              Don't Have an Account?{" "}
+              <LinkContainer to="/signup">
+                <Button variant="outline-primary">Sign Up!</Button>
+              </LinkContainer>
+            </div>
           </Card.Body>
         </Card>
       </div>

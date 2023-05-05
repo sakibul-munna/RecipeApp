@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { Form, Button, Container, Card, Alert } from "react-bootstrap";
 import { useSignUp } from "../hooks/useSignUp";
+import { LinkContainer } from "react-router-bootstrap";
 
 export const SignUpScreen = () => {
   const [name, setName] = useState("");
@@ -78,6 +79,12 @@ export const SignUpScreen = () => {
                 Sign Up
               </Button>
             </Form>
+            <div className="w-100 text-center mt-3">
+              Already Have an Account?{" "}
+              <LinkContainer to="/login">
+                <Button variant="outline-primary">Log In!</Button>
+              </LinkContainer>
+            </div>
           </Card.Body>
         </Card>
       </div>
