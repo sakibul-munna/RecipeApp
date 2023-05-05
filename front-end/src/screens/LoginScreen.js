@@ -3,7 +3,7 @@ import { Form, Button, Container, Card, Alert } from "react-bootstrap";
 import { useLogin } from "../hooks/useLogin";
 import { LinkContainer } from "react-router-bootstrap";
 
-const LoginScreen = ({ location }) => {
+const LoginScreen = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const { signin, error, isLoading } = useLogin();
