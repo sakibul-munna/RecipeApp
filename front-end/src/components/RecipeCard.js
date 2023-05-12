@@ -21,7 +21,7 @@ const RecipeCard = ({ recipe }) => {
           <Link
             to={`/recipe/${recipe._id}`}
             state={{
-              image: `${recipe.image}`,
+              image: `${recipe.imagePath}`,
               title: `${recipe.title}`,
               type: `${recipe.type}`,
               description: `${recipe.recipe}`,
