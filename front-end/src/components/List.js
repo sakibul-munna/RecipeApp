@@ -1,16 +1,22 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import data from "../data/Recipes";
 import { Col, Row } from "react-bootstrap";
 import RecipeCard from "../components/RecipeCard";
 import { getAllRecipes } from "../data/recipeAPI";
 
 function List(props) {
+  const [recipeList, setRecipeList] = useState([]);
+
   useEffect(() => {
-    async function fetchProducts() {
-      await getAllRecipes();
+    async function fetchRecipes() {
+      try {
+        const recipes = await getAllRecipes();
+        setRecipeList(recipes);
+      } catch (error) {
+        console.error(error);
+      }
     }
-    console.log("Fetching Recipes");
-    fetchProducts();
+    fetchRecipes();
   }, []);
 
   //create a new array by filtering the original array
@@ -28,8 +34,8 @@ function List(props) {
   return (
     <div>
       <Row>
-        {filteredData.map((item) => (
-          <Col sm={12} md={6} lg={4} xl={3}>
+        {recipeList.map((item) => (
+          <Col key={item._id} sm={12} md={6} lg={4} xl={3}>
             <RecipeCard recipe={item} />
           </Col>
         ))}

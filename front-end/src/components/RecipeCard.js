@@ -1,12 +1,12 @@
 import React from "react";
 import { Card } from "react-bootstrap";
 import { Link } from "react-router-dom";
- 
+
 const RecipeCard = ({ recipe }) => {
   return (
     <Card className="my-3 p-3 rounded" bg="cardBackground">
       <Card.Img
-        src={recipe.image}
+        src={`http://localhost:3030/${recipe.imagePath}`}
         variant="top"
         style={{ width: 250, height: 300 }}
       />
@@ -34,5 +34,5 @@ const RecipeCard = ({ recipe }) => {
     </Card>
   );
 };
- 
+
 export default RecipeCard;

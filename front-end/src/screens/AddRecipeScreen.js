@@ -1,6 +1,7 @@
 import React, { useState } from "react";
-import { Form, Button, Container, Card } from "react-bootstrap";
+import { Form, Button, Container, Card, Alert } from "react-bootstrap";
 import axios from "axios";
+import { useAuthContext } from "../hooks/useAuthContext";
 
 const AddRecipeScreen = () => {
   const [title, setTitle] = useState("");
@@ -8,6 +9,9 @@ const AddRecipeScreen = () => {
   const [recipe, setRecipe] = useState("");
   const [type, setType] = useState("");
   const [image, setImage] = useState(null);
+  const { user } = useAuthContext();
+  const [showSuccessAlert, setShowSuccessAlert] = useState(false);
+  const [showErrorAlert, setShowErroAlert] = useState(false);
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -21,11 +25,35 @@ const AddRecipeScreen = () => {
     }
 
     try {
-      const response = await axios.post("/api/submit", formData);
+      const token = user.token;
+      const config = {
+        headers: {
+          "Content-Type": "multipart/form-data",
+          "x-auth-token": token,
+        },
+      };
+
+      const response = await axios.post(
+        "http://localhost:3030/api/recipes",
+        formData,
+        config
+      );
+      handleReset();
+      setShowSuccessAlert(true);
       console.log(response.data);
     } catch (error) {
+      setShowSuccessAlert(true);
       console.error(error);
     }
+  };
+
+  const handleReset = () => {
+    document.getElementById("addRecipeForm").reset();
+    console.log("reseting...");
+    setTitle("");
+    setDetails("");
+    setRecipe("");
+    setType("");
   };
 
   return (
@@ -48,7 +76,29 @@ const AddRecipeScreen = () => {
             >
               Add Recipe
             </h2>
-            <Form onSubmit={handleSubmit}>
+            {showSuccessAlert && (
+              <Alert
+                variant="success"
+                onClose={() => setShowSuccessAlert(false)}
+                dismissible
+              >
+                Recipe saved successfully!
+              </Alert>
+            )}
+            {showErrorAlert && (
+              <Alert
+                variant="error"
+                onClose={() => setShowErroAlert(false)}
+                dismissible
+              >
+                Couldn't save recipe!
+              </Alert>
+            )}
+            <Form
+              id="addRecipeForm"
+              onSubmit={handleSubmit}
+              onReset={handleReset}
+            >
               <Form.Group className="mt-3" controlId="formTitle">
                 <Form.Label>Title</Form.Label>
                 <Form.Control
@@ -89,12 +139,13 @@ const AddRecipeScreen = () => {
                   onChange={(e) => setType(e.target.value)}
                 >
                   <option value="">Select a recipe type</option>
-                  <option value="type1">Drinks</option>
-                  <option value="type2">Snacks</option>
-                  <option value="type3">Healthy Diets</option>
-                  <option value="type3">Breakfast</option>
-                  <option value="type3">Appetizers</option>
-                  <option value="type3">Dinner</option>
+                  <option value="drinks">Drinks</option>
+                  <option value="lunch">Lunch</option>
+                  <option value="snacks">Snacks</option>
+                  <option value="healthy_diets">Healthy Diets</option>
+                  <option value="breakfast">Breakfast</option>
+                  <option value="appetizers">Appetizers</option>
+                  <option value="dinner">Dinner</option>
                 </Form.Control>
               </Form.Group>
 

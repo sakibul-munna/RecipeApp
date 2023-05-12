@@ -31,7 +31,6 @@ function validateRecipe(recipe) {
     title: Joi.string().min(3).required(),
     details: Joi.string().required(),
     recipe: Joi.string().required(),
-    imagePath: Joi.string().required(),
     type: Joi.required(),
   });
 
