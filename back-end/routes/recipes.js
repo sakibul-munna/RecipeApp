@@ -1,6 +1,5 @@
 import express from "express";
 import multer from "multer";
-import path from "path";
 import { Recipe, validateRecipe as validate } from "../model/recipe.js";
 import { auth } from "../middleware/auth.js";
 
