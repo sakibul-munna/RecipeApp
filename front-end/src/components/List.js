@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import data from "../data/Recipes";
 import { Col, Row } from "react-bootstrap";
 import RecipeCard from "../components/RecipeCard";
 import { getAllRecipes } from "../data/recipeAPI";
@@ -20,7 +19,7 @@ function List(props) {
   }, []);
 
   //create a new array by filtering the original array
-  const filteredData = data.filter((el) => {
+  const filteredData = recipeList.filter((el) => {
     //if no input the return the original
     if (props.input === "") {
       return el;
@@ -34,7 +33,7 @@ function List(props) {
   return (
     <div>
       <Row>
-        {recipeList.map((item) => (
+        {filteredData.map((item) => (
           <Col key={item._id} sm={12} md={6} lg={4} xl={3}>
             <RecipeCard recipe={item} />
           </Col>
