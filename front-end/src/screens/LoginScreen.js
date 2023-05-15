@@ -31,7 +31,7 @@ const LoginScreen = () => {
                 padding: "10px",
               }}
             >
-              Sign In to The Amazing Recipe App
+              Sign In to The Simple Recipe App
             </h2>
             {error ? (
               <Alert variant="danger">{JSON.stringify(error)}</Alert>

@@ -32,7 +32,7 @@ export const SignUpScreen = () => {
                 padding: "10px",
               }}
             >
-              Sign Up to The Amazing Recipe App
+              Sign Up to The Simple Recipe App
             </h2>
             {error ? (
               <Alert variant="danger">{JSON.stringify(error)}</Alert>
