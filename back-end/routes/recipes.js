@@ -104,13 +104,9 @@ router.post("/:recipeId/rating", async (req, res) => {
 
     // Calculate the new rating and number of reviews
     let totalOldRating = parseFloat(oldRating) * parseInt(oldNumberOfReviews);
-    console.log(`Total old rating: ${totalOldRating}`);
     let newTotalRating = parseFloat(totalOldRating) + parseFloat(userRating);
-    console.log(`New total rating: ${newTotalRating}`);
     let totalNumberOfReviews = oldNumberOfReviews + 1;
-    console.log(`Total number of reviews: ${totalNumberOfReviews}`);
     let avgRating = parseFloat(newTotalRating) / parseInt(totalNumberOfReviews);
-    console.log(`Average rating: ${avgRating}`);
 
     const newNumReviews = oldNumberOfReviews + 1;
 
