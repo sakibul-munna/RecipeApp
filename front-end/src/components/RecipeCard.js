@@ -1,6 +1,7 @@
 import React from "react";
 import { Card } from "react-bootstrap";
 import { Link } from "react-router-dom";
+import Rating from "./Rating";
 
 const RecipeCard = ({ recipe }) => {
   return (
@@ -17,14 +18,14 @@ const RecipeCard = ({ recipe }) => {
         <Card.Text className="cardText" style={{ width: 250, height: 180 }}>
           <b>Description: </b> {recipe.details}
         </Card.Text>
-        <div className="card-action">
+        <Card.Text as="div">
+          <Rating value={recipe.rating} text={`${recipe.numReviews} reviews`} />
+        </Card.Text>
+        <div className="card-action mt-3">
           <Link
             to={`/recipe/${recipe._id}`}
             state={{
-              image: `${recipe.imagePath}`,
-              title: `${recipe.title}`,
-              type: `${recipe.type}`,
-              description: `${recipe.recipe}`,
+              id: `${recipe._id}`,
             }}
           >
             See Details

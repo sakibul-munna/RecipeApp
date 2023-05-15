@@ -91,4 +91,41 @@ router.delete("/:id", async (req, res) => {
   return res.send(recipe);
 });
 
+router.post("/:recipeId/rating", async (req, res) => {
+  try {
+    const recipeId = req.params.recipeId;
+    const userRating = req.body.rating;
+    console.log(`User rating: ${userRating}`);
+
+    // Retrieve the current rating and number of reviews for the recipe
+    const recipe = await Recipe.findById(recipeId);
+    const oldRating = recipe.rating;
+    const oldNumberOfReviews = recipe.numReviews;
+
+    // Calculate the new rating and number of reviews
+    let totalOldRating = parseFloat(oldRating) * parseInt(oldNumberOfReviews);
+    console.log(`Total old rating: ${totalOldRating}`);
+    let newTotalRating = parseFloat(totalOldRating) + parseFloat(userRating);
+    console.log(`New total rating: ${newTotalRating}`);
+    let totalNumberOfReviews = oldNumberOfReviews + 1;
+    console.log(`Total number of reviews: ${totalNumberOfReviews}`);
+    let avgRating = parseFloat(newTotalRating) / parseInt(totalNumberOfReviews);
+    console.log(`Average rating: ${avgRating}`);
+
+    const newNumReviews = oldNumberOfReviews + 1;
+
+    // Update the recipe with the new rating and number of reviews
+    recipe.rating = avgRating;
+    recipe.numReviews = newNumReviews;
+    await recipe.save();
+
+    res
+      .status(200)
+      .json({ message: "Recipe rating and numReviews updated successfully" });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: "Internal server error" });
+  }
+});
+
 export default router;

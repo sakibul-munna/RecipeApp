@@ -23,6 +23,8 @@ const Recipe = mongoose.model(
       lowercase: true,
       trim: true,
     },
+    rating: { type: Number, required: false, default: 0 },
+    numReviews: { type: Number, required: false, default: 0 },
   })
 );
 
